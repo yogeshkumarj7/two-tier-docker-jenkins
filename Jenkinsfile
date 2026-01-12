@@ -1,19 +1,21 @@
 pipeline {
     agent any
-
     stages {
-        stage('Build') {
+        stage('Checkout') {
             steps {
-                bat 'docker build -t tasktrack-app .'
+                git branch: 'main', url: 'https://github.com/yogeshkumarj7/two-tier-docker-jenkins.git'
             }
         }
-
+        stage('Build') {
+            steps {
+                sh 'docker build -t tasktrack-app .'
+            }
+        }
         stage('Deploy') {
             steps {
-                bat 'docker compose down'
-                bat 'docker compose up -d --build'
+                sh 'docker compose down || true'
+                sh 'docker compose up -d --build'
             }
         }
     }
 }
-
