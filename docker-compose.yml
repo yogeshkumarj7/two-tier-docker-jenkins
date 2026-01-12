@@ -1,0 +1,23 @@
+version: '3.8'
+services:
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: taskdb
+      POSTGRES_USER: taskuser
+      POSTGRES_PASSWORD: taskpass
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+  flask:
+    build: .
+    ports:
+      - "5000:5000"
+    environment:
+      DB_HOST: postgres
+      DB_NAME: taskdb
+      DB_USER: taskuser
+      DB_PASSWORD: taskpass
+    depends_on:
+      - postgres
+volumes:
+  postgres-data:

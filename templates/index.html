@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TaskTrack</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            padding: 40px;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        .container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 6px;
+            max-width: 600px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        form {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 8px 14px;
+            background: #2563eb;
+            border: none;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #1e40af;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #f1f5f9;
+        }
+
+        td, th {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        .delete-btn {
+            background: #dc2626;
+        }
+
+        .delete-btn:hover {
+            background: #991b1b;
+        }
+    </style>
+</head>
+
+<body>
+<div class="container">
+
+    <h2>📝 TaskTrack</h2>
+
+    <form method="POST" action="/add-task">
+        <input type="text" name="title" placeholder="Enter task" required>
+        <button type="submit">Add</button>
+    </form>
+
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Task</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+
+        {% for task in tasks %}
+        <tr>
+            <td>{{ task.id }}</td>
+            <td>{{ task.title }}</td>
+            <td>{{ task.status }}</td>
+            <td>
+                <form method="POST" action="/delete-task/{{ task.id }}">
+                    <button class="delete-btn">🗑️</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+</div>
+</body>
+</html>
